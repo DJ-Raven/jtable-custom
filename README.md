@@ -1,7 +1,7 @@
 # jtable-custom
 Version 1.0.0
 ## Overview
-Thhis table custom has provide some method for custom cell render and cell editor.
+This table custom has provide some method for custom cell render and cell editor.
 
 
 ## Library In Used
