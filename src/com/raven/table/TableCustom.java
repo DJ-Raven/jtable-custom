@@ -118,7 +118,7 @@ public class TableCustom extends JTable {
             @Override
             public void begin() {
                 if (insertAndUpdate) {
-                    rowHeight = animateRowHeight;
+                    rowHeight = animateRowHeight + getRowHeight();
                 } else {
                     rowHeight = getRowHeight();
                 }
@@ -146,6 +146,12 @@ public class TableCustom extends JTable {
 
     public TableRowData getModelData(int row) {
         return datas.get(row);
+    }
+
+    public void updateModelData(int row, TableRowData data) {
+        data.setEditing(datas.get(row).isEditing());
+        datas.set(row, data);
+        repaint();
     }
 
     public DefaultTableModel getTableModel() {
@@ -262,6 +268,7 @@ public class TableCustom extends JTable {
             stopCellEditing();
             datas.add(index, data);
             getTableModel().insertRow(index, data.toTableRow());
+            setRowSelectionInterval(index, index);
             insertRow = index;
             if (animate) {
                 setRowHeight(insertRow, 1);
