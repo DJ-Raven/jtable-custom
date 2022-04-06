@@ -197,7 +197,7 @@ public class Main extends javax.swing.JFrame {
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         table.stopCellEditing();
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
-        sorter.setRowFilter(RowFilter.regexFilter(txtSearch.getText().trim()));
+        sorter.setRowFilter(RowFilter.regexFilter("Ra"));
         table.setRowSorter(sorter);
         table.autoRowHeight();
     }//GEN-LAST:event_txtSearchKeyReleased
