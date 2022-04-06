@@ -145,10 +145,12 @@ public class TableCustom extends JTable {
     }
 
     public TableRowData getModelData(int row) {
+        row = convertRowIndexToModel(row);
         return datas.get(row);
     }
 
     public void updateModelData(int row, TableRowData data) {
+        row = convertRowIndexToModel(row);
         data.setEditing(datas.get(row).isEditing());
         datas.set(row, data);
         repaint();
@@ -290,6 +292,11 @@ public class TableCustom extends JTable {
         }
     }
 
+    public void removeAllRows() {
+        getTableModel().setRowCount(0);
+        datas.clear();
+    }
+
     public void scrollToIndex(int index) {
         getSelectionModel().setSelectionInterval(index, index);
         Rectangle r = new Rectangle(getCellRect(index, 0, true));
@@ -300,6 +307,22 @@ public class TableCustom extends JTable {
     public void stopCellEditing() {
         if (isEditing()) {
             getCellEditor().stopCellEditing();
+        }
+    }
+
+    public void autoRowHeight() {
+        for (int row = 0; row < getRowCount(); row++) {
+            int r = convertRowIndexToModel(row);
+            if (datas.get(r).isEditing()) {
+                int height = getRowHeight();
+                for (int col = 0; col < getColumnCount(); col++) {
+                    Component comp = prepareRenderer(getCellRenderer(row, col), row, col);
+                    if (comp.getPreferredSize().height > height) {
+                        height = comp.getPreferredSize().height;
+                    }
+                }
+                setRowHeight(row, height);
+            }
         }
     }
 
